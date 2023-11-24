@@ -1,1 +1,40 @@
+version: '3.7'
 
+services:
+  backend:
+    image: ghcr.io/kohlbacherlab/bwhc-backend:1.0-snapshot-broker-connector
+
+    # Optionally specify the User- and Group ID of the system user to run the service
+    user: 1000:1000
+
+    ports:
+      - 9000:9000   # Adapt port mapping as needed
+
+    environment:
+      ZPM_SITE: DNPMTEST
+      APPLICATION_SECRET: $(head -c 64 /dev/urandom | base64)  # Optionally override the application secret (see below). Default: $(head >
+      N_RANDOM_FILES: 50       # Optionally configure generation of N (positive integer) random mtbfiles upon start
+
+    volumes:
+      # External volume for config files with site-specific adaptations
+      - /home/dnpmtest/bwhc_config:/bwhc_config
+
+      # External volume for bwhc data persistence
+      - /home/dnpmtest/bwhc_data:/bwhc_data
+
+    # Optionally set the network mode if for instance the backend connector will connect to the forward proxy on 'localhost'
+    network_mode: host
+
+  frontend:
+    image: ghcr.io/kohlbacherlab/bwhc-frontend:2209
+
+    ports:
+      - 3000:3000   # Adapt port mapping as needed
+
+    environment:   
+      BACKEND_PROTOCOL: http        # Adapt protocol as needed
+      BACKEND_HOSTNAME: localhost   # Adapt Backend hostname as needed
+      BACKEND_PORT: 9000            # Adapt Backend port as needed
+      #NUXT_HOST: ...               # Optionally override the host for the Nuxt server. Default: localhost
+      #NUXT_PORT: ... 
+      
