@@ -1,0 +1,37 @@
+services: 
+  backend:
+    image: ghcr.io/kohlbacherlab/bwhc-backend:1.0-snapshot-broker-connector
+
+    user: 0:0 
+
+    ports:
+      - 9000:9000
+
+    environment:
+      ZPM_SITE: DnpmTest
+      APPLICATION_SECRET: mydnpmsitedemosecret2023bywinner 
+      N_RANDOM_FILES: 50
+ 
+    network_mode: host
+
+    volumes:
+      # External volume for config files with site-specific adaptations
+      - /home/dnpm/bwhc_config:/bwhc_config
+
+      # External volume for bwhc data persistence
+      - /home/dnpm/bwhc_data:/bwhc_data
+ 
+ 
+  frontend:
+    image: ghcr.io/kohlbacherlab/bwhc-frontend:2209
+ 
+    ports:
+      - 3000:3000   # Adapt port mapping as needed
+ 
+    environment:
+      BACKEND_PROTOCOL: https        # Adapt protocol as needed
+      BACKEND_HOSTNAME: dnpmtest.com   # Adapt Backend hostname as needed
+      BACKEND_PORT: 443            # Adapt Backend port as needed
+
+#      NUXT_HOST: dnpmtest.com              # Optionally override the host for the Nuxt server. Default: localhost
+ #     NUXT_PORT: 3000       # Optionally override the port on which the Nuxt server listens. Default: 3000
