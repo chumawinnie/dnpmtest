@@ -3,7 +3,7 @@
 ## Setting Up DNPM on  SIngle Nginx Server
 
 ### PREREQUISITES & SET UP NEEDED
-- AWS SERVER - UBUNTU 22 WAS USED HERE
+- UBUNTU 20 WAS USED HERE
 - NGINX PROXY SECURED WITH SSL
 - JAVA 11
 - Docker  and Docker compose
