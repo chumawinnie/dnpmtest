@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectorConfig>
+
+
+ <!-- Local Site ID as also defined in central config -->
+  <Site id="Freiburg"/>
+
+
+ <!-- Base URL to DNPM-Proxy -->
+  <Broker baseURL="http://localhost"/>
+
+
+ <!-- OPTIONAL, for periodic auto-update of site list from broker: Period (in seconds) -->
+  <!--
+  <Update period="30"/>
+  -->
+
+
+</ConnectorConfig>
